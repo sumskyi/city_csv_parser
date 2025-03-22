@@ -1,6 +1,6 @@
 import { readFileSync } from 'fs';
 
-let data = readFileSync('./cities.csv', 'utf8', (err, data) => { return data });
+let data = readFileSync('../cities.csv', 'utf8', (err, data) => { return data });
 
 let clone = (any) => { return JSON.parse(JSON.stringify(any)) }
 
