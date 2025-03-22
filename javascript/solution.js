@@ -73,16 +73,16 @@ class Printer {
   }
 
   call() {
-    this.maxLengthData = this.#maxLengthsData();
+    const maxLengthData = this.#maxLengthsData();
     const padRight = 3;
 
     const printRow = (city) => {
-      return city.city.padEnd(this.maxLengthData.city + padRight) +
-             city.population.padStart(this.maxLengthData.population + padRight) +
-             city.area.padStart(this.maxLengthData.area + padRight) +
-             city.density.padStart(this.maxLengthData.density + padRight) +
-             city.country.padStart(this.maxLengthData.country + padRight) +
-             city.percentage.padStart(this.maxLengthData.percentage + padRight)
+      return city.city.padEnd(maxLengthData.city + padRight) +
+             city.population.padStart(maxLengthData.population + padRight) +
+             city.area.padStart(maxLengthData.area + padRight) +
+             city.density.padStart(maxLengthData.density + padRight) +
+             city.country.padStart(maxLengthData.country + padRight) +
+             city.percentage.padStart(maxLengthData.percentage + padRight)
       ;
     }
 
