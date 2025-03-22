@@ -2,6 +2,9 @@
 
 Refactor and fix errors in the code below
 
+![image](https://github.com/user-attachments/assets/3f9bf86d-72e9-4321-a856-ede731e0ad1d)
+
+
 ```javascript
 const data = `city,population,area,density,country
   Shanghai,24256800,6340,3826,China
