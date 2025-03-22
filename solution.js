@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { readFileSync } from 'fs';
 
 let data = readFileSync('./cities.csv', 'utf8', (err, data) => { return data });
 
