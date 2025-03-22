@@ -1,6 +1,6 @@
 # city_csv_parser test task
 
-Refactor the code below
+Refactor and fix errors in the code below
 
 ```javascript
 const data = `city,population,area,density,country
