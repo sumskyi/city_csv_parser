@@ -75,18 +75,57 @@ local function addDensityPercentageColumn(body)
   end
 
   for i, row in ipairs(body) do
-    local raw_density =row.density / getMaxDensity(body) * 100
+    local raw_density = row.density / getMaxDensity(body) * 100
     row["percentage"] = math.floor(raw_density + 0.5) -- the trick for round
   end
 
   return body
 end -- addDensityPercentageColumn
 
+local function sortByPercentage(body)
+  -- local function compareByPercentage(a, b)
+  --   return a.data.percentage < b.data.percentage
+  -- end
+  local function compareByPercentage(a, b)
+    -- Handle potential nil percentage values and duplicates
+    -- if a.data.percentage == nil and b.data.percentage == nil then
+    --   return a.index < b.index -- Maintain original order if both are nil
+    -- elseif a.data.percentage == nil then
+    --   return true  -- Items with nil percentage go to the end
+    -- elseif b.data.percentage == nil then
+    --   return false -- Items with nil percentage go to the end
+    -- else
+    --   if a.data.percentage == b.data.percentage then
+    --     return a.index < b.index -- Maintain original order if percentages are equal
+    --   else
+    --     return a.data.percentage < b.data.percentage
+    --   end
+    -- end
+    return a.data.percentage < b.data.percentage
+  end
+
+  local keys = {}
+  local with_index = {}
+  for key, row in ipairs(body) do
+    table.insert(with_index, { index = key, data = row })
+  end
+
+  table.sort(with_index, compareByPercentage)  -- Sort in place
+
+  for _, item in ipairs(with_index) do
+    table.insert(keys, item.index) -- Extract sorted indices
+  end
+
+  return keys
+end
 
 local fileContent = readCSV("../cities.csv");
 local lines = readLines(fileContent)
 local header = extractHeader(lines)
-local body = extractBody(lines, header)
-body = addDensityPercentageColumn(body)
 
-print(inspect(body))
+local body = extractBody(lines, header)
+addDensityPercentageColumn(body) -- modifies body
+local sortedKeys = sortByPercentage(body)
+
+print(inspect(sortedKeys))
+-- print(inspect(body))

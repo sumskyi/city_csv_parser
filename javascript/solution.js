@@ -62,6 +62,7 @@ class CityParser {
     this.table = this.table.sort((a, b) => b.percentage - a.percentage);
   }
 
+  // TODO: memoize call
   get #maxDensity(){
     return this.table.sort((a, b) => a.density - b.density)[this.table.length - 1].density;
   }
