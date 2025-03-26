@@ -83,26 +83,26 @@ local function addDensityPercentageColumn(body)
 end -- addDensityPercentageColumn
 
 local function sortByPercentage(body)
-  -- local function compareByPercentage(a, b)
-  --   return a.data.percentage < b.data.percentage
-  -- end
   local function compareByPercentage(a, b)
-    -- Handle potential nil percentage values and duplicates
-    -- if a.data.percentage == nil and b.data.percentage == nil then
-    --   return a.index < b.index -- Maintain original order if both are nil
-    -- elseif a.data.percentage == nil then
-    --   return true  -- Items with nil percentage go to the end
-    -- elseif b.data.percentage == nil then
-    --   return false -- Items with nil percentage go to the end
-    -- else
-    --   if a.data.percentage == b.data.percentage then
-    --     return a.index < b.index -- Maintain original order if percentages are equal
-    --   else
-    --     return a.data.percentage < b.data.percentage
-    --   end
-    -- end
     return a.data.percentage < b.data.percentage
   end
+  -- local function compareByPercentage(a, b)
+  --   -- Handle potential nil percentage values and duplicates
+  --   if a.data.percentage == nil and b.data.percentage == nil then
+  --     return a.index < b.index -- Maintain original order if both are nil
+  --   elseif a.data.percentage == nil then
+  --     return true  -- Items with nil percentage go to the end
+  --   elseif b.data.percentage == nil then
+  --     return false -- Items with nil percentage go to the end
+  --   else
+  --     if a.data.percentage == b.data.percentage then
+  --       return a.index < b.index -- Maintain original order if percentages are equal
+  --     else
+  --       return a.data.percentage < b.data.percentage
+  --     end
+  --   end
+  --   return a.data.percentage < b.data.percentage
+  -- end
 
   local keys = {}
   local with_index = {}
