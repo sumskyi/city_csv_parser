@@ -82,9 +82,10 @@ local function addDensityPercentageColumn(body)
   return body
 end -- addDensityPercentageColumn
 
+local with_index = {}
 local function sortByPercentage(body)
-  local function compareByPercentage(a, b)
-    return a.data.percentage < b.data.percentage
+  local function compareByPercentage(a, b) -- higher are first
+    return a.data.percentage > b.data.percentage
   end
   -- local function compareByPercentage(a, b)
   --   -- Handle potential nil percentage values and duplicates
@@ -105,7 +106,6 @@ local function sortByPercentage(body)
   -- end
 
   local keys = {}
-  local with_index = {}
   for key, row in ipairs(body) do
     table.insert(with_index, { index = key, data = row })
   end
@@ -128,4 +128,4 @@ addDensityPercentageColumn(body) -- modifies body
 local sortedKeys = sortByPercentage(body)
 
 print(inspect(sortedKeys))
--- print(inspect(body))
+print(inspect(with_index))
