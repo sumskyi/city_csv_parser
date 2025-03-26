@@ -66,30 +66,21 @@ local function addDensityPercentageColumn(body)
     else
       local density = 0
       for i, row in ipairs(body) do
-        print(tonumber(row.density))
-        print(density)
-        print(inspect(row))
-
         if (tonumber(row.density) > tonumber(density)) then density = row.density end
       end
 
       results[body] = density
       return density
     end
-
   end
 
   for i, row in ipairs(body) do
-    for key, value in pairs(row) do
-      row["sabaka"] = getMaxDensity(body)
-    end
+    local raw_density =row.density / getMaxDensity(body) * 100
+    row["percentage"] = math.floor(raw_density + 0.5) -- the trick for round
   end
 
-  local maxDensity = getMaxDensity(body)
-  print(inspect(maxDensity))
-
   return body
-end
+end -- addDensityPercentageColumn
 
 
 local fileContent = readCSV("../cities.csv");
@@ -98,8 +89,4 @@ local header = extractHeader(lines)
 local body = extractBody(lines, header)
 body = addDensityPercentageColumn(body)
 
--- print(inspect(header))
--- print(inspect(body))
-
--- print(inspect(lines))
--- maxDensity()
+print(inspect(body))
