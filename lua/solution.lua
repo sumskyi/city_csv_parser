@@ -141,6 +141,20 @@ local function maxLengthData(body)
   }
 end
 
+local function printRow(city, maxLengths)
+  local padRight = 3
+
+  return string.format(
+    "%-" .. maxLengths.city + padRight .. "s" ..
+    "%" .. maxLengths.population + padRight .. "s" ..
+    "%" .. maxLengths.area + padRight .. "s" ..
+    "%" .. maxLengths.density + padRight .. "s" ..
+    "%" .. maxLengths.country + padRight .. "s" ..
+    "%" .. maxLengths.percentage + padRight .. "s",
+    city.city, city.population, city.area, city.density, city.country, city.percentage
+  )
+end
+
 local fileContent = readCSV("../cities.csv");
 local lines = readLines(fileContent)
 local header = extractHeader(lines)
@@ -149,6 +163,17 @@ local body = extractBody(lines, header)
 addDensityPercentageColumn(body) -- modifies body
 local sortedKeys = sortByPercentage(body)
 
--- print(inspect(sortedKeys))
--- print(inspect(with_index))
-print(inspect(maxLengthData(body)))
+local maxLengths = maxLengthData(body)
+
+local function rowByIndex(table_data, target_index)
+  for i = 1, #table_data do
+    local item = table_data[i]
+    if item.index == target_index then
+      return printRow(item.data, maxLengths) -- Exit the function after finding the element
+    end
+  end
+end
+
+for _, idx in ipairs(sortedKeys) do
+  print(rowByIndex(with_index, idx))
+end
