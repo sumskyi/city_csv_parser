@@ -30,6 +30,4 @@ func main() {
 		// fmt.Println(reflect.TypeOf(record))
 		fmt.Println(record)
 	}
-
-	fmt.Println("q")
 }
