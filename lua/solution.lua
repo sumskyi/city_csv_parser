@@ -1,4 +1,6 @@
 --[[
+  Lua 5.1
+
   https://github.com/kikito/inspect.lua
   [sudo] luarocks install inspect
 ]]
@@ -119,6 +121,26 @@ local function sortByPercentage(body)
   return keys
 end
 
+local function maxLengthData(body)
+  local function maxLength(col)
+    local lengths = {}
+    for _, item in ipairs(body) do
+      table.insert(lengths, string.len(item[col]))
+    end
+
+    return math.max(unpack(lengths))
+  end
+
+  return {
+    city = maxLength('city'),
+    population = maxLength('population'),
+    area = maxLength('area'),
+    density = maxLength('density'),
+    country = maxLength('country'),
+    percentage = maxLength('percentage')
+  }
+end
+
 local fileContent = readCSV("../cities.csv");
 local lines = readLines(fileContent)
 local header = extractHeader(lines)
@@ -127,5 +149,6 @@ local body = extractBody(lines, header)
 addDensityPercentageColumn(body) -- modifies body
 local sortedKeys = sortByPercentage(body)
 
-print(inspect(sortedKeys))
-print(inspect(with_index))
+-- print(inspect(sortedKeys))
+-- print(inspect(with_index))
+print(inspect(maxLengthData(body)))
