@@ -5,6 +5,8 @@ let data = readFileSync('../cities.csv', 'utf8', (err, data) => { return data })
 let clone = (any) => { return JSON.parse(JSON.stringify(any)) }
 
 class CityParser {
+  memoizedMaxDensity;
+
   constructor(data, separator) {
     this.separator = separator;
     this.lines = data.split('\n').map((line) => line.trim());
@@ -62,9 +64,12 @@ class CityParser {
     this.table = this.table.sort((a, b) => b.percentage - a.percentage);
   }
 
-  // TODO: memoize call
   get #maxDensity(){
-    return this.table.sort((a, b) => a.density - b.density)[this.table.length - 1].density;
+    if(undefined === this.memoizedMaxDensity) {
+      return this.memoizedMaxDensity = this.table.sort((a, b) => a.density - b.density)[this.table.length - 1].density;
+    } else {
+      return this.memoizedMaxDensity;
+    }
   }
 }
 
