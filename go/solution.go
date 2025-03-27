@@ -1,8 +1,12 @@
 package main
 
 import (
+	"encoding/csv"
 	"fmt"
+	"io"
+	"log"
 	"os"
+	"strings"
 )
 
 func main() {
@@ -12,5 +16,20 @@ func main() {
 	}
 
 	raw_csv := string(data)
-	fmt.Println(raw_csv)
+	row := csv.NewReader(strings.NewReader(raw_csv))
+
+	for {
+		record, err := row.Read()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		// fmt.Println(reflect.TypeOf(record))
+		fmt.Println(record)
+	}
+
+	fmt.Println("q")
 }
