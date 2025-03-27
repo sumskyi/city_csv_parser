@@ -24,6 +24,7 @@ interface MaxLengthData {
   readonly percentage: number;
 }
 class CityParser {
+  memoizedMaxDensity: number | undefined;
   separator: string;
   lines: string[];
   table: City[] = []
@@ -67,7 +68,13 @@ class CityParser {
   }
 
   #addDensityPercentageColumn(): void {
-    const maxDensity = () => this.table.sort((a: City, b: City) => a.density - b.density)[this.table.length - 1].density;
+    const maxDensity = () => {
+      if(undefined === this.memoizedMaxDensity) {
+        return this.memoizedMaxDensity = this.table.sort((a: City, b: City) => a.density - b.density)[this.table.length - 1].density;
+      } else {
+        return this.memoizedMaxDensity;
+      }
+    }
 
     this.table = clone(this.table).reduce((acc: City[], value: City) => {
       const currentVaue: City = {
