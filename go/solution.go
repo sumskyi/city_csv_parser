@@ -16,6 +16,8 @@ func main() {
 	}
 
 	raw_csv := string(data)
+	// fmt.Println(raw_csv)
+	// fmt.Println(strings.NewReader(raw_csv))
 	row := csv.NewReader(strings.NewReader(raw_csv))
 
 	for {
