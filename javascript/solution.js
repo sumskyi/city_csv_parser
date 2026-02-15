@@ -2,8 +2,6 @@ import { readFileSync } from 'fs';
 
 let data = readFileSync('../cities.csv', 'utf8', (err, data) => { return data });
 
-let clone = (any) => { return JSON.parse(JSON.stringify(any)) }
-
 class CityParser {
   memoizedMaxDensity;
 
@@ -47,15 +45,12 @@ class CityParser {
   }
 
   #addDensityPercentageColumn() {
-    this.table = clone(this.table).reduce((acc, value) => {
-      const currentVaue = {
-        ...value,
-        percentage: (Math.round((value.density * 100) / this.#maxDensity).toString())
+    this.table = structuredClone(this.table).map((row) => {
+      return {
+        ...row,
+        percentage: (Math.round((row.density * 100) / this.#maxDensity).toString())
       };
-
-      acc.push(currentVaue);
-      return acc;
-    }, []);
+    });
 
     return this.table;
   }
@@ -99,7 +94,7 @@ class Printer {
 
   #maxLengthsData(){
     const maxLength = (col) => {
-      const maxBy = clone(this.table).sort((a, b) => b[col].length - a[col].length)[0];
+      const maxBy = structuredClone(this.table).sort((a, b) => b[col].length - a[col].length)[0];
 
       return maxBy[col].length;
     }
